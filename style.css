@@ -90,34 +90,35 @@ html {
   transform-origin: left center;
   font-size: 15px;
 }
-/* .sector:nth-child(1) {
+.sector:nth-child(1) {
   transform: rotate(-18deg);
 }
 .sector:nth-child(2) {
-  transform: rotate(33deg);
+  transform: rotate(18deg);
 }
 .sector:nth-child(3) {
-  transform: rotate(85deg);
+  transform: rotate(54deg);
 }
 .sector:nth-child(4) {
-  transform: rotate(136deg);
+  transform: rotate(90deg);
 }
 .sector:nth-child(5) {
-  transform: rotate(188deg);
+  transform: rotate(126deg);
 }
 .sector:nth-child(6) {
-  transform: rotate(240deg);
+  transform: rotate(162deg);
 }
 .sector:nth-child(7) {
-  transform: rotate(291deg);
-} */
-.sector:nth-child(1) { transform: rotate(0deg); }
-.sector:nth-child(2) { transform: rotate(51.43deg); }
-.sector:nth-child(3) { transform: rotate(102.86deg); }
-.sector:nth-child(4) { transform: rotate(154.29deg); }
-.sector:nth-child(5) { transform: rotate(205.72deg); }
-.sector:nth-child(6) { transform: rotate(257.15deg); }
-.sector:nth-child(7) { transform: rotate(308.58deg); }
+  transform: rotate(198deg);
+}
+.sector:nth-child(8) {
+  transform: rotate(234deg);
+}
+.sector:nth-child(9) {
+  transform: rotate(270deg);
+}
+.sector:nth-child(10) {
+  transform: rotate(306deg);
 }
 .sector:nth-child(2n+1) .sector-inner {
   background: #fef6e0;
@@ -168,13 +169,33 @@ html {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
-.light:nth-child(1) { transform: rotate(0deg); }
-.light:nth-child(2) { transform: rotate(51.43deg); }
-.light:nth-child(3) { transform: rotate(102.86deg); }
-.light:nth-child(4) { transform: rotate(154.29deg); }
-.light:nth-child(5) { transform: rotate(205.72deg); }
-.light:nth-child(6) { transform: rotate(257.15deg); }
-.light:nth-child(7) { transform: rotate(308.58deg); }
+.light:nth-child(2) {
+  transform: rotate(36deg);
+}
+.light:nth-child(3) {
+  transform: rotate(72deg);
+}
+.light:nth-child(4) {
+  transform: rotate(108deg);
+}
+.light:nth-child(5) {
+  transform: rotate(144deg);
+}
+.light:nth-child(6) {
+  transform: rotate(180deg);
+}
+.light:nth-child(7) {
+  transform: rotate(216deg);
+}
+.light:nth-child(8) {
+  transform: rotate(252deg);
+}
+.light:nth-child(9) {
+  transform: rotate(288deg);
+}
+.light:nth-child(10) {
+  transform: rotate(324deg);
+}
 /* 灯光动画 */
 @keyframes single-blink {
   0% { background-color: #ffe58b}
