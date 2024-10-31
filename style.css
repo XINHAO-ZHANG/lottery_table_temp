@@ -1,24 +1,45 @@
-@media (min-width: 500px) {
+@media screen and (max-width: 500px) {
   .wrapper {
-    top: 100px;
+    transform: scale(0.8);
+    margin: 60px auto 40px;
+  }
+  .result {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (min-width: 501px) and (max-width: 800px) {
+  .wrapper {
+    transform: scale(1);
+    margin: 80px auto 60px;
+  }
+  .result {
+    margin-top: 40px;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1200px) {
+  .wrapper {
     transform: scale(1.2);
+    margin: 100px auto 80px;
+  }
+  .result {
+    margin-top: 60px;
   }
 }
-@media (min-width: 800px) {
+
+@media screen and (min-width: 1201px) {
   .wrapper {
-    top: 150px;
     transform: scale(1.5);
+    margin: 120px auto 100px;
   }
-}
-@media (min-width: 1000px) {
-  .wrapper {
-    top: 200px;
-    transform: scale(2);
+  .result {
+    margin-top: 80px;
   }
 }
 
 /* 清除默认的样式 */
- html,body {
+html,body {
   margin: 0;
   padding: 0;
   border: none;
@@ -34,10 +55,10 @@ html {
   height: 200px;
   width: 200px;
   padding: 20px;
-  margin: 120px auto 80px;
   background-color: #c0381f;
   box-shadow: #000000 0px 0px 10px;
   border-radius: 50%;
+  z-index: 100;
 }
 
 /* 内圆 */
@@ -88,7 +109,7 @@ html {
   left: 100px;
   top: 0px;
   transform-origin: left center;
-  font-size: 15px;
+  font-size: 12px;
 }
 .sector:nth-child(1) {
   transform: rotate(-18deg);
@@ -210,6 +231,13 @@ html {
 
 /* 最后的结果部分 */
 .result {
+  position: relative;
   text-align: center;
-  font-size: 16px;
+  font-size: 24px;
+  color: #c0381f;
+  font-weight: bold;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
 }
