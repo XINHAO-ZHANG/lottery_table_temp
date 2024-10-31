@@ -4,14 +4,12 @@
     transform: scale(1.2);
   }
 }
-
 @media (min-width: 800px) {
   .wrapper {
     top: 150px;
     transform: scale(1.5);
   }
 }
-
 @media (min-width: 1000px) {
   .wrapper {
     top: 200px;
@@ -19,130 +17,178 @@
   }
 }
 
-/* Clear default styles */
-html, body {
+/* 清除默认的样式 */
+ html,body {
   margin: 0;
   padding: 0;
   border: none;
   outline: none;
 }
-
 html {
   height: 100%;
 }
 
-/* Main TurnTable styling */
+/* TurnTable的整体 */
 .wrapper {
   position: relative;
-  width: 300px; /* Adjusted size */
-  height: 300px; /* Adjusted size */
+  height: 200px;
+  width: 200px;
   padding: 20px;
-  margin: auto;
+  margin: 120px auto 80px;
   background-color: #c0381f;
-  border: 8px solid #fff; /* Added border to match the wheel */
-  box-shadow: 0px 0px 10px #000;
+  box-shadow: #000000 0px 0px 10px;
   border-radius: 50%;
-  overflow: hidden; /* Ensures no overflow */
 }
 
-/* Center circle */
+/* 内圆 */
 .panel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80%; /* Adjusted for better fit */
-  height: 80%; /* Adjusted for better fit */
-  background-color: #fff;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+  background-color: #b7b7b7;
+  border-radius: 100px;
 }
-
-/* Pointer styling */
+/* 转盘中心圆 */
 .pointer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5%;
-  height: 10%;
-  margin-top: -5%; /* Centering adjustment */
-  margin-left: -2.5%; /* Centering adjustment */
+  position: relative;
+  height: 30px;
+  width: 30px;
+  padding: 6px;
+  color: #fff899;
+  font-size: 12px;
   background-color: #dc5b5b;
-  color: #fff;
-  border: 3px solid #c0381f;
   border-radius: 50%;
+  border: 1px solid #c0381f;
   text-align: center;
-  line-height: 30px; /* Adjust line height to vertical center text */
-  cursor: pointer;
-}
 
-/* Pointer decoration */
+  /* transition: transform 3s cubic-bezier(.2,.93,.43,1); 这样可以替代Element.animate dom直接添加动画*/
+}
+/* 转盘指针部分 */
 .pointer::before {
-  content: '';
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-top-color: #dc5b5b;
-  transform: translateX(-50%);
+  left: 14px;
+  top: -24px;
+  content: '';
+  border: solid;
+  border-width: 12px 6px;
+  border-color: transparent;
+  border-bottom-color: #c0381f;
 }
 
-/* Sectors styling */
+/* 扇形奖品区 */
 .sector {
   position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%; /* Adjust width to cover half the radius */
-  height: 100%; /* Full height of the wrapper */
+  width: 100px;
+  height: 200px;
+  border-radius: 0px 100px 100px 0;
+  overflow: hidden;
+  left: 100px;
+  top: 0px;
   transform-origin: left center;
-  background: #ffeab1; /* Default light color */
+  font-size: 15px;
 }
-
-/* Sectors rotation and alternating background color */
-.sector:nth-child(odd) {
-  background: #ffeab1;
+/* .sector:nth-child(1) {
+  transform: rotate(-18deg);
 }
-
-.sector:nth-child(even) {
+.sector:nth-child(2) {
+  transform: rotate(33deg);
+}
+.sector:nth-child(3) {
+  transform: rotate(85deg);
+}
+.sector:nth-child(4) {
+  transform: rotate(136deg);
+}
+.sector:nth-child(5) {
+  transform: rotate(188deg);
+}
+.sector:nth-child(6) {
+  transform: rotate(240deg);
+}
+.sector:nth-child(7) {
+  transform: rotate(291deg);
+} */
+.sector:nth-child(1) { transform: rotate(0deg); }
+.sector:nth-child(2) { transform: rotate(51.43deg); }
+.sector:nth-child(3) { transform: rotate(102.86deg); }
+.sector:nth-child(4) { transform: rotate(154.29deg); }
+.sector:nth-child(5) { transform: rotate(205.72deg); }
+.sector:nth-child(6) { transform: rotate(257.15deg); }
+.sector:nth-child(7) { transform: rotate(308.58deg); }
+}
+.sector:nth-child(2n+1) .sector-inner {
+  background: #fef6e0;
+}
+ .sector:nth-child(2n) .sector-inner {
   background: #ffffff;
 }
-
-/* Text inside sectors */
 .sector-inner {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: rotate(var(--rotate)); /* Use CSS variable for rotation */
   text-align: center;
-  font-size: 16px;
+  display: block;
+  width: 40px;
+  padding: 5px 3px 0 57px;
+  height: 195px;
+  background: #ffeab1;
+  transform: translateX(-100px) rotate(36deg);
+  transform-origin: right center;
+  border-radius: 100px 0 0 100px;
+}
+.sector-inner span {
+  display: block;
+  transform-origin: center;
+  transform: rotate(-19deg);
   color: #d46854;
 }
 
-/* Lights on the wheel */
+/* 转盘灯 */
 .light {
   position: absolute;
-  top: 5px;
-  left: 50%;
-  width: 10px;
   height: 10px;
-  background-color: #ffe58b;
+  width: 10px;
   border-radius: 50%;
-  transform-origin: 5px 50%;
-  animation: blink 3s linear infinite;
+  top: 5px;
+  left: 115px;
+  transform-origin: 5px 115px;
+}
+.light:nth-child(2n) {
+  background-color: #fafce7;
+  animation-name: double-blink;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.light:nth-child(2n+1) {
+  background-color: #ffe58b;
+  animation-name: single-blink;
+  animation-delay: 0.5s;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.light:nth-child(1) { transform: rotate(0deg); }
+.light:nth-child(2) { transform: rotate(51.43deg); }
+.light:nth-child(3) { transform: rotate(102.86deg); }
+.light:nth-child(4) { transform: rotate(154.29deg); }
+.light:nth-child(5) { transform: rotate(205.72deg); }
+.light:nth-child(6) { transform: rotate(257.15deg); }
+.light:nth-child(7) { transform: rotate(308.58deg); }
+/* 灯光动画 */
+@keyframes single-blink {
+  0% { background-color: #ffe58b}
+  50% { background-color: #e6ba1e}
+  100% { background-color: #f5c002}
+}
+@keyframes double-blink {
+  0% { background-color: #fafce7 }
+  50% { background-color: #d5df7d }
+  100% { background-color: #d4eb06 }
 }
 
-@keyframes blink {
-  0%, 100% { background-color: #ffe58b; }
-  50% { background-color: #d46854; }
-}
-
-/* Displaying the result */
+/* 最后的结果部分 */
 .result {
   text-align: center;
   font-size: 16px;
-  color: #d46854;
 }
