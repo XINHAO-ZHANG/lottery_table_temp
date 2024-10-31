@@ -9,84 +9,92 @@
 </head>
 <body>
   <div class="wrapper">
+    <!-- <div class="light"></div> -->
     <div class="panel">
+      <!-- <div class="sector">
+        <div class="sector-inner">
+          <span>谢谢参与</span>
+        </div>
+      </div>  -->
       <div class="pointer">开始抽奖</div>
     </div>
   </div>
-  <div class="result"></div>
+  <div class="result">
+
+  </div>
   <script>
-    let pointer = document.getElementsByClassName('pointer')[0];
-    let result = document.getElementsByClassName('result')[0];
-    let onRotation = false; // 记录当前是否正在旋转
+    let pointer = document.getElementsByClassName('pointer')[0]
+    let result = document.getElementsByClassName('result')[0]
+    let onRotation = false; // 记录当前是否正在旋转，如果正在旋转，就不能继续点击了
 
-    let reward = ['山楂', '棒棒糖', '脆香米', '小熊饼干', '铅笔', '本子', '橡皮擦'];
-
+    // 自己设置奖品，改变数组的内容就可以改变奖品
+    let reward = ['山楂', '棒棒糖', '蔡老师亲吻一个', '脆香米', '小熊饼干', '蔡老师拥抱一个', '铅笔', '本子', '蔡老师mua一个','橡皮擦']
+  
     function render() {
-      let wrapper = document.getElementsByClassName('wrapper')[0];
-      let panel = document.getElementsByClassName('panel')[0];
-      let totalDegrees = 360;
-      let degreesPerReward = totalDegrees / reward.length;
-
+      let wrapper = document.getElementsByClassName('wrapper')[0]
+      let panel = document.getElementsByClassName('panel')[0]
+      let pointer = document.getElementsByClassName('pointer')[0]
       for (let i = 0; i < reward.length; i++) {
-        let sector = document.createElement('div');
-        sector.className = 'sector';
-        sector.style.transform = `rotate(${i * degreesPerReward}deg) skewY(${90 - degreesPerReward / 2}deg)`;
+        let light = document.createElement('div')
+        light.className = 'light'
+        wrapper.insertBefore(light, panel)
 
-        let sector_inner = document.createElement('div');
-        sector_inner.className = 'sector-inner';
-        sector_inner.style.transform = `skewY(${-(90 - degreesPerReward / 2)}deg)`;
+        let sector = document.createElement('div')
+        sector.className = 'sector'
+        let sector_inner = document.createElement('div')
+        sector_inner.className = 'sector-inner'
+        let span = document.createElement('span')
+        let textNode = document.createTextNode(`${reward[i]}`)
+        span.appendChild(textNode)
+        sector_inner.appendChild(span)
+        sector.appendChild(sector_inner)
+        panel.insertBefore(sector, pointer)
 
-        let span = document.createElement('span');
-        span.appendChild(document.createTextNode(reward[i]));
-
-        sector_inner.appendChild(span);
-        sector.appendChild(sector_inner);
-        panel.appendChild(sector);
       }
     }
-    render();
+    render()
+    let noRewardMessages = ['蔡老师亲吻一个', '蔡老师拥抱一个', '蔡老师mua一个'];  // 定义未中奖的情况列表
 
-    let preDeg = [];  // 记录之前的度数
-    let i = 0;
+    let preDeg = []  // 记录之前的度数
+    let i = 0
     let getReward = function () {
-      let currentDeg = 0;  // 当前角度数
+      currentDeg = 0;  // 当前角度数
       return function () {
         let rotateDeg = Math.random() * 360 + 1800; // 转5圈到6圈
-        currentDeg += rotateDeg;
-        preDeg[i++] = currentDeg % 360;
-        console.log('currentDeg', currentDeg);
-        let rewardIndex = Math.floor((currentDeg % 360) / (360 / reward.length));
-        let rewardText = reward[rewardIndex];
+        currentDeg += rotateDeg
+        preDeg[i++] = currentDeg % 360
+        console.log('currentDeg', currentDeg)
+        let rewardText = reward[Math.floor((currentDeg + 18) % 360 / 36)]  // 判断转到了那个结果
         return {
           deg: currentDeg,
-          text: '恭喜获得: ' + rewardText
-        };
-      };
-    };
+          text: noRewardMessages.includes(rewardText) ? '这不算，重新抽一次。' : '恭喜乖乖宝贝获得: ' + rewardText
+        }
+      }
+    }
 
     pointer.addEventListener('click', function () {
       if (!onRotation) {
-        console.log('开始抽奖');
-        onRotation = true;
-        let nextStatus = getReward()();
-        console.log(nextStatus);
-        result.innerHTML = nextStatus.text;
-        result.style.display = 'none';
+        console.log('开始抽奖咯！嘻嘻！')
+        onRotation = true
+        let nextStatus = (getReward())()
+        console.log(nextStatus)
+        result.innerHTML = nextStatus.text
+        result.style.display = 'none'
         pointer.animate([
-          { transform: `rotateZ(${preDeg[i-1] || 0}deg)` },
-          { transform: `rotateZ(${nextStatus.deg}deg)` }
+           { transform: `rotateZ(${ preDeg[i-1] }deg)` } ,
+           { transform: `rotateZ(${ nextStatus.deg }deg)` }
         ], {
           duration: 3000,
           easing: "cubic-bezier(.2,.93,.43,1)"
-        });
-        pointer.style.transform = `rotateZ(${nextStatus.deg}deg)`;
-        setTimeout(() => {
-          result.style.display = 'block';
-          onRotation = false;
-          console.log('抽奖结束');
-        }, 3000);
+        })
+        pointer.style.transform = `rotateZ(${nextStatus.deg}deg)`
       }
-    });
+      setTimeout(() => {
+        result.style.display = 'block';
+        onRotation = false;
+        console.log('抽奖结束咯！嘿嘿！');
+      }, 3000);
+    })
   </script>
   <noscript>
     <p>本页面需要在浏览器支持启用JavaScript</p>
