@@ -1,52 +1,34 @@
-@media screen and (max-width: 500px) {
-  .wrapper {
-    transform: scale(0.8);
-    margin: 60px auto 40px;
-  }
-  .result {
-    margin-top: 20px;
-  }
-}
-
-@media screen and (min-width: 501px) and (max-width: 800px) {
-  .wrapper {
-    transform: scale(1);
-    margin: 80px auto 60px;
-  }
-  .result {
-    margin-top: 40px;
-  }
-}
-
-@media screen and (min-width: 801px) and (max-width: 1200px) {
-  .wrapper {
-    transform: scale(1.2);
-    margin: 100px auto 80px;
-  }
-  .result {
-    margin-top: 60px;
-  }
-}
-
-@media screen and (min-width: 1201px) {
-  .wrapper {
-    transform: scale(1.5);
-    margin: 120px auto 100px;
-  }
-  .result {
-    margin-top: 80px;
-  }
-}
-
 /* 清除默认的样式 */
-html,body {
+html, body {
   margin: 0;
   padding: 0;
   border: none;
   outline: none;
 }
+
 html {
   height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #fff6e5, #ffd6e7);
+  min-height: 100vh;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  padding: 40px 20px;
+}
+
+/* 标题样式 */
+.title {
+  text-align: center;
+  color: #c0381f;
+  font-size: 2.5em;
+  margin: 40px 0 80px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: bounce 2s infinite;
+  position: relative;
+  z-index: 10;
 }
 
 /* TurnTable的整体 */
@@ -55,10 +37,15 @@ html {
   height: 200px;
   width: 200px;
   padding: 20px;
+  margin: 120px auto;
   background-color: #c0381f;
-  box-shadow: #000000 0px 0px 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   border-radius: 50%;
   z-index: 100;
+  transform-origin: center center;
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 内圆 */
@@ -72,6 +59,7 @@ html {
   background-color: #b7b7b7;
   border-radius: 100px;
 }
+
 /* 转盘中心圆 */
 .pointer {
   position: relative;
@@ -84,9 +72,10 @@ html {
   border-radius: 50%;
   border: 1px solid #c0381f;
   text-align: center;
-
-  /* transition: transform 3s cubic-bezier(.2,.93,.43,1); 这样可以替代Element.animate dom直接添加动画*/
+  z-index: 200;
+  cursor: pointer;
 }
+
 /* 转盘指针部分 */
 .pointer::before {
   position: absolute;
@@ -111,42 +100,7 @@ html {
   transform-origin: left center;
   font-size: 12px;
 }
-.sector:nth-child(1) {
-  transform: rotate(-18deg);
-}
-.sector:nth-child(2) {
-  transform: rotate(18deg);
-}
-.sector:nth-child(3) {
-  transform: rotate(54deg);
-}
-.sector:nth-child(4) {
-  transform: rotate(90deg);
-}
-.sector:nth-child(5) {
-  transform: rotate(126deg);
-}
-.sector:nth-child(6) {
-  transform: rotate(162deg);
-}
-.sector:nth-child(7) {
-  transform: rotate(198deg);
-}
-.sector:nth-child(8) {
-  transform: rotate(234deg);
-}
-.sector:nth-child(9) {
-  transform: rotate(270deg);
-}
-.sector:nth-child(10) {
-  transform: rotate(306deg);
-}
-.sector:nth-child(2n+1) .sector-inner {
-  background: #fef6e0;
-}
- .sector:nth-child(2n) .sector-inner {
-  background: #ffffff;
-}
+
 .sector-inner {
   text-align: center;
   display: block;
@@ -157,13 +111,34 @@ html {
   transform: translateX(-100px) rotate(36deg);
   transform-origin: right center;
   border-radius: 100px 0 0 100px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 .sector-inner span {
   display: block;
   transform-origin: center;
   transform: rotate(-19deg);
   color: #d46854;
+  font-size: 13px;
+  font-weight: 1000;
 }
+
+/* 扇形区域旋转角度 */
+.sector:nth-child(1) { transform: rotate(-18deg); }
+.sector:nth-child(2) { transform: rotate(18deg); }
+.sector:nth-child(3) { transform: rotate(54deg); }
+.sector:nth-child(4) { transform: rotate(90deg); }
+.sector:nth-child(5) { transform: rotate(126deg); }
+.sector:nth-child(6) { transform: rotate(162deg); }
+.sector:nth-child(7) { transform: rotate(198deg); }
+.sector:nth-child(8) { transform: rotate(234deg); }
+.sector:nth-child(9) { transform: rotate(270deg); }
+.sector:nth-child(10) { transform: rotate(306deg); }
+
+/* 扇形颜色 */
+.sector:nth-child(2n+1) .sector-inner { background: #fef6e0; }
+.sector:nth-child(2n) .sector-inner { background: #ffffff; }
 
 /* 转盘灯 */
 .light {
@@ -175,69 +150,211 @@ html {
   left: 115px;
   transform-origin: 5px 115px;
 }
+
+/* 转盘灯旋转角度 */
+.light:nth-child(2) { transform: rotate(36deg); }
+.light:nth-child(3) { transform: rotate(72deg); }
+.light:nth-child(4) { transform: rotate(108deg); }
+.light:nth-child(5) { transform: rotate(144deg); }
+.light:nth-child(6) { transform: rotate(180deg); }
+.light:nth-child(7) { transform: rotate(216deg); }
+.light:nth-child(8) { transform: rotate(252deg); }
+.light:nth-child(9) { transform: rotate(288deg); }
+.light:nth-child(10) { transform: rotate(324deg); }
+
+/* 灯光颜色和动画 */
 .light:nth-child(2n) {
   background-color: #fafce7;
-  animation-name: double-blink;
-  animation-duration: 3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-.light:nth-child(2n+1) {
-  background-color: #ffe58b;
-  animation-name: single-blink;
-  animation-delay: 0.5s;
-  animation-duration: 3s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-.light:nth-child(2) {
-  transform: rotate(36deg);
-}
-.light:nth-child(3) {
-  transform: rotate(72deg);
-}
-.light:nth-child(4) {
-  transform: rotate(108deg);
-}
-.light:nth-child(5) {
-  transform: rotate(144deg);
-}
-.light:nth-child(6) {
-  transform: rotate(180deg);
-}
-.light:nth-child(7) {
-  transform: rotate(216deg);
-}
-.light:nth-child(8) {
-  transform: rotate(252deg);
-}
-.light:nth-child(9) {
-  transform: rotate(288deg);
-}
-.light:nth-child(10) {
-  transform: rotate(324deg);
-}
-/* 灯光动画 */
-@keyframes single-blink {
-  0% { background-color: #ffe58b}
-  50% { background-color: #e6ba1e}
-  100% { background-color: #f5c002}
-}
-@keyframes double-blink {
-  0% { background-color: #fafce7 }
-  50% { background-color: #d5df7d }
-  100% { background-color: #d4eb06 }
+  animation: double-blink 3s linear infinite;
 }
 
-/* 最后的结果部分 */
+.light:nth-child(2n+1) {
+  background-color: #ffe58b;
+  animation: single-blink 3s linear infinite;
+  animation-delay: 0.5s;
+}
+
+/* 灯光动画 */
+@keyframes single-blink {
+  0% { background-color: #ffe58b; }
+  50% { background-color: #e6ba1e; }
+  100% { background-color: #f5c002; }
+}
+
+@keyframes double-blink {
+  0% { background-color: #fafce7; }
+  50% { background-color: #d5df7d; }
+  100% { background-color: #d4eb06; }
+}
+
+/* 结果显示 */
 .result {
-  position: relative;
   text-align: center;
   font-size: 24px;
   color: #c0381f;
   font-weight: bold;
   padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
+  margin: 40px auto;
+  max-width: 80%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  display: block;
+}
+
+/* 装饰元素 */
+.decoration {
+  position: fixed;
+  font-size: 24px;
+  opacity: 0.5;
+  pointer-events: none;
+  animation: float-spin 20s linear infinite;
+}
+
+.decoration:nth-child(1) { top: 10%; left: 10%; }
+.decoration:nth-child(2) { top: 20%; right: 10%; animation-delay: -5s; }
+.decoration:nth-child(3) { bottom: 15%; left: 15%; animation-delay: -10s; }
+.decoration:nth-child(4) { bottom: 10%; right: 20%; animation-delay: -15s; }
+
+/* 响应式设计 */
+@media screen and (max-width: 500px) {
+  .wrapper {
+    transform: scale(0.7);
+    margin: 40px auto;
+  }
+  
+  .title {
+    font-size: 1.5em;
+    margin: 20px 0;
+    padding: 0 10px;
+  }
+  
+  .result {
+    margin: 20px auto;
+    padding: 15px;
+    font-size: 18px;
+    width: 90%;
+    max-width: none;
+  }
+  
+  .initial-text {
+    font-size: 18px;
+  }
+  
+  .decoration {
+    font-size: 20px;
+  }
+  
+  body {
+    padding: 10px;
+  }
+}
+
+@media screen and (min-width: 501px) and (max-width: 800px) {
+  .wrapper {
+    transform: scale(1);
+    margin: 80px auto 60px;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1200px) {
+  .wrapper {
+    transform: scale(1.2);
+    margin: 100px auto 80px;
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .wrapper {
+    transform: scale(1.5);
+    margin: 120px auto 100px;
+  }
+}
+
+/* 动画 */
+@keyframes float-spin {
+  0% { transform: rotate(0deg) translate(0, 0); }
+  25% { transform: rotate(90deg) translate(10px, 10px); }
+  50% { transform: rotate(180deg) translate(0, 0); }
+  75% { transform: rotate(270deg) translate(-10px, 10px); }
+  100% { transform: rotate(360deg) translate(0, 0); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 添加初始文本的样式 */
+.initial-text {
+  animation: fadeIn 1s ease-in;
+  font-size: 24px;
+  color: #c0381f;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 添加触摸设备的优化 */
+@media (hover: none) {
+  .pointer {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .pointer:active {
+    transform: scale(0.95);
+  }
+}
+
+/* 确保在不同设备上的滚动行为一致 */
+html {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* 优化移动端动画性能 */
+.wrapper,
+.pointer,
+.light {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 添加安全区域适配 */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+/* 针对不同屏幕密度优化文字大小 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .sector-inner span {
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+/* 移动端优化 */
+@media screen and (max-width: 500px) {
+  .sector-inner span {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  
+  .wrapper {
+    transform: scale(0.7);
+    transform-origin: center center;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
 }

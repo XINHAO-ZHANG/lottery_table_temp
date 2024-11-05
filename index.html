@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>TurnTable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>蔡老师的神秘奖励转盘</title>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+  <div class="background-decoration"></div>
+  <div class="stars"></div>
+  <div class="title">✨ 蔡老师的神秘奖励转盘 ✨</div>
+
+  <!-- 添加更多装饰元素 -->
+  <div class="decoration">🎈</div>
+  <div class="decoration">🎨</div>
+  <div class="decoration">✨</div>
+  <div class="decoration">🎪</div>
+  <div class="decoration">🌟</div>
+  <div class="decoration">🎭</div>
+
   <div class="wrapper">
     <!-- <div class="light"></div> -->
     <div class="panel">
@@ -20,7 +31,9 @@
     </div>
   </div>
   <div class="result">
-
+    <div class="initial-text">
+      看看你们能获得什么奖品呢? 🧸
+    </div>
   </div>
   <script>
     let pointer = document.getElementsByClassName('pointer')[0]
@@ -72,29 +85,56 @@
       }
     }
 
+    function showResult(text) {
+      result.style.display = 'block';
+      result.innerHTML = `
+        <div style="animation: popIn 0.5s forwards">
+          ${text}
+          <div style="font-size: 40px; margin-top: 20px">
+            ${text.includes('恭喜') ? '🎉 🎊 🌟' : '✨ 🌈 ⭐'}
+          </div>
+        </div>
+      `;
+    }
+
     pointer.addEventListener('click', function () {
       if (!onRotation) {
-        console.log('开始抽奖咯！嘻嘻！')
-        onRotation = true
-        let nextStatus = (getReward())()
-        console.log(nextStatus)
-        result.innerHTML = nextStatus.text
-        result.style.display = 'none'
+        console.log('开始抽奖咯！嘻嘻！');
+        onRotation = true;
+        let nextStatus = (getReward())();
+        result.style.display = 'none'; // 转动时隐藏结果
         pointer.animate([
-           { transform: `rotateZ(${ preDeg[i-1] }deg)` } ,
-           { transform: `rotateZ(${ nextStatus.deg }deg)` }
+          { transform: `rotateZ(${preDeg[i-1]}deg)` },
+          { transform: `rotateZ(${nextStatus.deg}deg)` }
         ], {
           duration: 3000,
           easing: "cubic-bezier(.2,.93,.43,1)"
-        })
-        pointer.style.transform = `rotateZ(${nextStatus.deg}deg)`
+        });
+        pointer.style.transform = `rotateZ(${nextStatus.deg}deg)`;
+        
+        setTimeout(() => {
+          showResult(nextStatus.text);
+          onRotation = false;
+          console.log('抽奖结束咯！嘿嘿！');
+        }, 3000);
       }
-      setTimeout(() => {
-        result.style.display = 'block';
-        onRotation = false;
-        console.log('抽奖结束咯！嘿嘿！');
-      }, 3000);
-    })
+    });
+
+    // 页面加载时显示初始文本
+    document.addEventListener('DOMContentLoaded', function() {
+      result.style.display = 'block';
+    });
+
+    // 生成随机星星
+    const starsContainer = document.querySelector('.stars');
+    for (let i = 0; i < 20; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      starsContainer.appendChild(star);
+    }
   </script>
   <noscript>
     <p>本页面需要在浏览器支持启用JavaScript</p>
